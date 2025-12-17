@@ -14,7 +14,3 @@ USERID() {
 }
 
 USERID
-
-
-
-
