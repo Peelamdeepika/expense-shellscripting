@@ -8,7 +8,7 @@ Y="\e[33m"
 
 FOLDERNAME="/var/log/backend-logs"
 FILE=$(basename "$0")
-TIMESTAMP=$(date -%y+%m+%d)
+TIMESTAMP=$(date +%y-%m-%d)
 FILENAME="$FOLDERNAME_$FILE/$FILE-$TIMESTAMP.log"
 
 CHECK_ROOT() {
