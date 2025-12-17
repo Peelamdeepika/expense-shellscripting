@@ -85,7 +85,7 @@ dnf install mysql -y
 
 VALIDATE $? "mysql installed'
 
-mysql -h <mysql.daws82deepika.online> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h mysql.daws82deepika.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
 
 systemctl restart backend
 
