@@ -9,9 +9,9 @@ TIMESTAMP=$(date +%y-%m-%d)
 FILENAME=$(basename "$0" .sh)
 FILE="$FOLDERNAME/$FILENAME-$TIMESTAMP.log"
 
-id -u
+USERID=$(id -u)
 
-if [ $? -ne 0 ]; then
+if [ $USERID -ne 0 ]; then
       echo -e "you need  $R root access"
       exit 1
 fi
