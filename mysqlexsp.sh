@@ -13,7 +13,50 @@ USERID() {
     fi
 }
 
+FOLDERNAME="/var/log/expenseshell-logs"
+TIMESTAMP=$(date +%y -%m -%d)
+FILE=(echo $0)
+FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
+
+VALIDATE(){
+    if[ $1 -ne 0 ]; then
+   echo -e "$2 $R Failure"
+   exit 1
+ else
+   echo -e "$2 ... $G Successful" 
+fi
+}
+
+mkdir -p /var/log/expenseshell-logs
+
 USERID
+
+dnf install mysql-server -y &>>$FILENAME
+
+VALIDATE $? "mysql server installation"
+
+systemctl enable mysqld &>>$FILENAME
+
+VALIDATE $? "mysql enabled"
+
+systemctl start mysqld &>>$FILENAME
+
+VALIDATE $? "mysql started"
+
+mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$FILENAME
+
+VALIDATE $? "set root password"
+
+mysql &>>$FILENAME
+
+VALIDATE $? "connecting mysql"
+
+show databases;
+
+VALIDATE $? "show databases"
+
+
+
 
 
 
