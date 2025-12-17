@@ -6,10 +6,10 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 
-FOLDERNAME="/var/log/backend-logs"
-FILE=$(basename "$0")
+FOLDERNAME="/var/log/expenseshell-logs"
 TIMESTAMP=$(date +%y-%m-%d)
-FILENAME="$FOLDERNAME_$FILE/$FILE-$TIMESTAMP.log"
+FILE=$(basename "$0")
+FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
 
 CHECK_ROOT() {
     if [ $USERID -ne 0 ]; then
@@ -33,7 +33,7 @@ mkdir /var/log/backend-logs
 
 VALIDATE $? "created logs folder"
 
-dnf module disable nodejs -y &>>$FILENAME
+dnf module disable nodejs -y  &>>$FILENAME
 
 VALIDATE $? "diabling module nodejs"
 
