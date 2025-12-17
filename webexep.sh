@@ -33,11 +33,11 @@ VALIDATE $? "nginx installed"
 
 systemctl enable nginx &>>$FILE
 
-$VALIDATE $? "nginx enabled"
+VALIDATE $? "nginx enabled"
 
 systemctl start nginx &>>$FILE
 
-$VALIDATE $? "nginx started"
+VALIDATE $? "nginx started"
 
 rm -rf /usr/share/nginx/html/* &>>$FILE
 
