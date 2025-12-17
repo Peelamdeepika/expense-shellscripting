@@ -18,13 +18,13 @@ TIMESTAMP=$(date +%y -%m -%d)
 FILE=(echo $0)
 FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
 
-VALIDATE(){
+VALIDATE() {
     if[ $1 -ne 0 ]; then
-   echo -e "$2 $R Failure"
-   exit 1
- else
-   echo -e "$2 ... $G Successful" 
-fi
+       echo -e "$2 $R Failure"
+       exit 1
+       else
+       echo -e "$2 ... $G Successful" 
+    fi
 }
 
 mkdir -p /var/log/expenseshell-logs
