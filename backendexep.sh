@@ -13,7 +13,7 @@ FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
 
 CHECK_ROOT() {
     if [ $USERID -ne 0 ]; then
-      echo "you need $R root access"
+      echo -e "you need $R root access"
       exit 1
     fi  
 }
