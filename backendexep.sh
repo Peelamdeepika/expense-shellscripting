@@ -29,10 +29,6 @@ fi
 
 CHECK_ROOT
 
-mkdir /var/log/backend-logs
-
-VALIDATE $? "created logs folder"
-
 dnf module disable nodejs -y  &>>$FILENAME
 
 VALIDATE $? "diabling module nodejs"
