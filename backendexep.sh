@@ -29,64 +29,66 @@ fi
 
 CHECK_ROOT
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>$FILENAME
 
 VALIDATE $? "enabling module js"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>$FILENAME
 
 VALIDATE $? "installing node js"
 
-useradd expense
+useradd expense &>>$FILENAME
 
 VALIDATE $? "adding user"
 
-mkdir /app
+mkdir /app &>>$FILENAME
 
 VALIDATE $? "app folder created"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$FILENAME
 
 VALIDATE $? "application download"
 
-cd /app
+cd /app &>>$FILENAME
 
 VALIDATE $? "moved to app folder"
 
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>>$FILENAME
 
 VALIDATE $? "unzipping application"
 
-cd /app
+cd /app &>>$FILENAME
 
 VALIDATE $? "moved to app folder"
 
-npm install
+npm install &>>$FILENAME
 
 VALIDATE $? "installing npm"
 
-cp /home/ec2-user/expense-shellscripting/backend.service /etc/systemd/system/
+cp /home/ec2-user/expense-shellscripting/backend.service /etc/systemd/system/ &>>$FILENAME
 
 VALIDATE $? "Copied"
 
-systemctl daemon-reload
+systemctl daemon-reload &>>$FILENAME
 
 VALIDATE $? "daemon reloaded"
 
-systemctl start backend
+systemctl start backend &>>$FILENAME
 
 VALIDATE &? "started backend"
 
-systemctl enable backend
+systemctl enable backend &>>$FILENAME
 
 VALIDATE $? "backend enabled"
 
-dnf install mysql -y
+dnf install mysql -y &>>$FILENAME
 
 VALIDATE $? "mysql installed"
 
-mysql -h mysql.daws82deepika.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h mysql.daws82deepika.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>$FILENAME
 
-systemctl restart backend
+VALIDATE $? "setting up the schema"
+
+systemctl restart backend &>>$FILENAME
 
 VALIDATE $? "backend restarted"
