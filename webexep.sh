@@ -7,7 +7,7 @@ N="\e[0m"
 
 FOLDERNAME="/var/log/webserver-logs"
 TIMESTAMP=$(date +%y-%m-%d)
-FILENAME=$(basename "$0" .sh)
+FILENAME=$(echo "$0")
 FILE="$FOLDERNAME/$FILENAME-$TIMESTAMP.log"
 
 USERID=$(id -u)
