@@ -8,7 +8,7 @@ Y="\e[33m"
 
 FOLDERNAME="/var/log/expenseshell-logs"
 TIMESTAMP=$(date +%y-%m-%d)
-FILE=$(basename "$0")
+FILE=$(echo "$0")
 FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
 
 CHECK_ROOT() {
@@ -28,10 +28,6 @@ fi
 }
 
 CHECK_ROOT
-
-dnf module disable nodejs -y  &>>$FILENAME
-
-VALIDATE $? "diabling module nodejs"
 
 dnf module enable nodejs:20 -y
 
