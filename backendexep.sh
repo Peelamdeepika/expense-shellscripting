@@ -6,6 +6,11 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 
+FOLDERNAME="/var/log/backend-logs"
+FILE=$(basename "$0")
+TIMESTAMP=$(date -%y+%m+%d)
+FILENAME="$FOLDERNAME_$FILE/$FILE-$TIMESTAMP.log"
+
 CHECK_ROOT() {
     if [ $USERID -ne 0 ]; then
       echo "you need $R root access"
@@ -18,13 +23,17 @@ VALIDATE() {
    echo -e "$2...$R failure"
    exit 1
    else
-   echo "$2...$G success"
+   echo -e "$2...$G success"
 fi 
 }
 
 CHECK_ROOT
 
-dnf module disable nodejs -y
+mkdir /var/log/backend-logs
+
+VALIDATE $? "created logs folder"
+
+dnf module disable nodejs -y &>>$FILENAME
 
 VALIDATE $? "diabling module nodejs"
 
