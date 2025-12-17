@@ -65,7 +65,7 @@ npm install
 
 VALIDATE $? "installing npm"
 
-cp /home/ec2-user/expense-shellscripting/backendservice /etc/systemd/system/
+cp /home/ec2-user/expense-shellscripting/backend.service /etc/systemd/system/
 
 VALIDATE $? "Copied"
 
@@ -85,7 +85,7 @@ dnf install mysql -y
 
 VALIDATE $? "mysql installed'
 
-mysql -h mysql.daws82deepika.online -u root -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h mysql.daws82deepika.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
 
 systemctl restart backend
 
