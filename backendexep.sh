@@ -35,7 +35,7 @@ VALIDATE $? "enabling module js"
 
 dnf install nodejs -y
 
-VALIDATE $? "installing node js'
+VALIDATE $? "installing node js"
 
 useradd expense
 
@@ -47,7 +47,7 @@ VALIDATE $? "app folder created"
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
 
-VALIDATE $? "application download'
+VALIDATE $? "application download"
 
 cd /app
 
@@ -83,7 +83,7 @@ VALIDATE $? "backend enabled"
 
 dnf install mysql -y
 
-VALIDATE $? "mysql installed'
+VALIDATE $? "mysql installed"
 
 mysql -h mysql.daws82deepika.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
 
