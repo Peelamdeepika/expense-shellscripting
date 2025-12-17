@@ -15,7 +15,7 @@ USERID() {
 
 FOLDERNAME="/var/log/expenseshell-logs"
 TIMESTAMP=$(date +%y-%m-%d)
-FILE=(echo $0)
+FILE=$(basename "$0")
 FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
 
 VALIDATE() {
@@ -43,17 +43,17 @@ systemctl start mysqld &>>$FILENAME
 
 VALIDATE $? "mysql started"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$FILENAME
+mysql -h mysql.daws82deepika.online -u root -pExpenseApp@1 -e 'show databases;'
 
-VALIDATE $? "set root password"
+if [ $? -ne 0 ]; then
+   echo " your root password might not set...setting root passwor"
+   mysql_secure_installation --set-root-pass ExpenseApp@1 &>>$FILENAME
+   VALIDATE $? "your root password has set" 
+   else
+   echo "Your root password is already setup"
+fi
 
-mysql &>>$FILENAME
 
-VALIDATE $? "connecting mysql"
-
-show databases;
-
-VALIDATE $? "show databases"
 
 
 
