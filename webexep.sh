@@ -3,6 +3,7 @@
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
+N="\e[0m"
 
 FOLDERNAME="/var/log/webserver-logs"
 TIMESTAMP=$(date +%y-%m-%d)
@@ -18,10 +19,10 @@ fi
 
 VALIDATE() {
     if [ $? -ne 0 ]; then
-        echo -e " $2 ...$R failure"
+        echo -e " $2 ...$R failure$N"
         exit 1
          else
-        echo -e "$2 ..$G Success"
+        echo -e "$2 ..$G Success$N"
     fi
 }
 
