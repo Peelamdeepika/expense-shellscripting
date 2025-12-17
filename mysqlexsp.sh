@@ -14,12 +14,12 @@ USERID() {
 }
 
 FOLDERNAME="/var/log/expenseshell-logs"
-TIMESTAMP=$(date +%y -%m -%d)
+TIMESTAMP=$(date +%y-%m-%d)
 FILE=(echo $0)
 FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
 
 VALIDATE() {
-    if[ $1 -ne 0 ]; then
+    if [ $1 -ne 0 ]; then
        echo -e "$2 $R Failure"
        exit 1
        else
