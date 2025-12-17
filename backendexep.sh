@@ -8,7 +8,7 @@ Y="\e[33m"
 
 USERID() {
     if [ $USERNAME -ne 0 ]; then
-      echo "you need root access to $Y continue"
+      echo -e "you need root access to $Y continue"
       exit 1
     fi
 }
