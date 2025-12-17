@@ -8,7 +8,7 @@ Y="\e[33m"
 
 FOLDERNAME="/var/log/expenseshell-logs"
 TIMESTAMP=$(date +%y-%m-%d)
-FILE=$(echo "$0")
+FILE="backendexsp"
 FILENAME="$FOLDERNAME/$FILE-$TIMESTAMP.log"
 
 CHECK_ROOT() {
@@ -37,11 +37,17 @@ dnf install nodejs -y &>>$FILENAME
 
 VALIDATE $? "installing node js"
 
-useradd expense &>>$FILENAME
+id expense &>>$FILENAME
 
-VALIDATE $? "adding user"
+if [ $? -ne 0 ]; then
+  useradd expense &>>$FILENAME
+  VALIDATE $? "expense user added"
+  else
+  echo "expense user already exit"
+fi 
 
-mkdir /app &>>$FILENAME
+
+mkdir -p /app &>>$FILENAME
 
 VALIDATE $? "app folder created"
 
@@ -52,6 +58,8 @@ VALIDATE $? "application download"
 cd /app &>>$FILENAME
 
 VALIDATE $? "moved to app folder"
+
+rm -rf /app/*
 
 unzip /tmp/backend.zip &>>$FILENAME
 
