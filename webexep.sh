@@ -1,16 +1,71 @@
 #!/bin/bash
 
-USERNAME=$(id -u)
-
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 
-USERID() {
-    if [ $USERNAME -ne 0 ]; then
-       echo -e "you need root access to  $Y continue"
-       exit 1
+FOLDERNAME="/var/log/webserver-logs"
+TIMESTAMP=$(date +%y-%m-%d)
+FILENAME=$(basename "$0" .sh)
+FILE="$FOLDERNAME/$FILENAME-$TIMESTAMP.log"
+
+id -u
+
+if [ $? -ne 0 ]; then
+      echo -e "you need  $R root access"
+      exit 1
+fi
+
+VALIDATE() {
+    if [ $? -ne 0 ]; then
+        echo " $2 ...$R failure"
+        exit 1
+         else
+        echo "$2 ..$G Success"
     fi
 }
 
-USERID
+mkdir -p /var/log/webserver-logs
+
+dnf install nginx -y &>>$FILE
+
+VALIDATE $? "nginx installed"
+
+systemctl enable nginx &>>$FILE
+
+$VALIDATE $? "nginx enabled"
+
+systemctl start nginx &>>$FILE
+
+$VALIDATE $? "nginx started"
+
+rm -rf /usr/share/nginx/html/* &>>$FILE
+
+VALIDATE $? "removing old page"
+
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$FILE
+
+VALIDATE $? "downloading application zip file"
+
+cd /usr/share/nginx/html &>>$FILE
+
+VALIDATE $? "moving to html folder"
+
+rm -rf /html* &>>$FILE
+
+unzip /tmp/frontend.zip &>>$FILE
+
+VALIDATE $? "unziping file"
+
+cp /home/ec2-user/expense-shellscripting/expense.conf /etc/nginx/default.d/ &>>$FILE
+
+VALIDATE $? "copied Proxy Configuration"
+
+systemctl restart nginx &>>$FILE
+
+VALIDATE $? "nginx started"
+
+
+
+
+
