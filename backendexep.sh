@@ -1,16 +1,91 @@
 #!/bin/bash
 
-USERNAME=$(id -u)
+USERID=(id -u)
 
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 
-USERID() {
-    if [ $USERNAME -ne 0 ]; then
-      echo -e "you need root access to $Y continue"
+CHECK_ROOT() {
+    if [ $USERID -ne 0 ]; then
+      echo "you need $R root access"
       exit 1
-    fi
+    fi  
 }
 
-USERID
+VALIDATE() {
+   if [ $1 -ne 0 ];
+   echo -e "$2...$R failure"
+   exit 1
+   else
+   echo "$2...$G success"
+fi 
+}
+
+CHECK_ROOT
+
+dnf module disable nodejs -y
+
+VALIDATE $? "diabling module nodejs"
+
+dnf module enable nodejs:20 -y
+
+VALIDATE $? "enabling module js"
+
+dnf install nodejs -y
+
+VALIDATE $? "installing node js'
+
+useradd expense
+
+VALIDATE $? "adding user"
+
+mkdir /app
+
+VALIDATE $? "app folder created"
+
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+
+VALIDATE $? "application download'
+
+cd /app
+
+VALIDATE $? "moved to app folder"
+
+unzip /tmp/backend.zip
+
+VALIDATE $? "unzipping application"
+
+cd /app
+
+VALIDATE $? "moved to app folder"
+
+npm install
+
+VALIDATE $? "installing npm"
+
+cp /home/ec2-user/expense-shellscripting/backendservice /etc/systemd/system/
+
+VALIDATE $? "Copied"
+
+systemctl daemon-reload
+
+VALIDATE $? "daemon reloaded"
+
+systemctl start backend
+
+VALIDATE &? "started backend"
+
+systemctl enable backend
+
+VALIDATE $? "backend enabled"
+
+dnf install mysql -y
+
+VALIDATE $? "mysql installed'
+
+mysql -h <mysql.daws82deepika.online> -uroot -pExpenseApp@1 < /app/schema/backend.sql
+
+systemctl restart backend
+
+VALIDATE $? "backend restarted"
