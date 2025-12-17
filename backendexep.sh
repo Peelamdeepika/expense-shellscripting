@@ -83,7 +83,7 @@ VALIDATE $? "daemon reloaded"
 
 systemctl start backend &>>$FILENAME
 
-VALIDATE &? "started backend"
+VALIDATE $? "started backend"
 
 systemctl enable backend &>>$FILENAME
 
