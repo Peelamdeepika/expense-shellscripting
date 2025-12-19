@@ -24,6 +24,17 @@ if [ ! -d "$DESTI_DIR" ]
      exit 1
 fi
 
+FIND=$(find $SOURCE_DIR -name "*.log" -mtime +$DATE)
+
+if [ -n "$SOURCE_DIR" ]
+  then 
+  echo " we are able to find files $FIND"
+  exit 1
+fi
+  
+
+
+
 
      
 
