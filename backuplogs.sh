@@ -44,7 +44,7 @@ if [ -n "$FILES" ]
     exit 1
   fi
   
-  esle "files are not present"
+  else "files are not present"
   exit 1
 fi
 
