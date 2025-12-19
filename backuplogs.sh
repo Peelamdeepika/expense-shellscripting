@@ -29,8 +29,25 @@ FIND=$(find $SOURCE_DIR -name "*.log" -mmin +$DAYS)
 if [ -n "$FIND" ]
   then 
   echo " we are able to find files $FIND"
-  exit 1
+  ZIP_FILE="/home/ec2-user/arch_log/app_logs.zip"
+  find $SOURCE_DIR -name "*.log" -mmin +$DAYS | ZIP -@ "$ZIP_FILE"
+if [ -f $ZIP_FILE ]
+ then
+   echo " successfully created the $ZIP_FILE" file
+  while -r read filepath
+  do 
+  echo "Deleting the $ZIP_FILE"
+  rm -rf $ZIP_FILE
+  echo "Deleted the $ZIP_FILE"
+  done <<< $FILES
+ else
+ echo "failed to create zipfile"
+ exit 1
 fi
+else
+echo "we are not able to find files'
+
+
 
 
 
