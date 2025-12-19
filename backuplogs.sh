@@ -40,12 +40,13 @@ if [ -n "$FILES" ]
             rm -rf $filepath
         done <<< $FILES
 
-    esle "zip file is not created"
+    esle 
+    echo "zip file is not created"
     exit 1
   fi
   
   else 
-  "files are not present"
+  echo "files are not present"
   exit 1
 fi
 
