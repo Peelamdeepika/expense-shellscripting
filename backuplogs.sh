@@ -25,7 +25,7 @@ fi
 
 FILES=$(find $SOURCE_DIR -name "*.log" -mmin +$DAYS)
 
-if [ -n $FILES ]
+if [ -n "$FILES" ]
   then
     echo " files are present"
     echo "$FILES"
