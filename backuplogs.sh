@@ -24,12 +24,28 @@ if [ ! -d $DEST_DIR ]
 fi
 
 FILES=$(find $SOURCE_DIR -name "*.log" -mmin +$DAYS)
-
+ZIP_FILE="/$DEST_DIR/arch_log.zip"
 if [ -n "$FILES" ]
   then
     echo " files are present"
     echo "$FILES"
+    echo "$FILES" | zip -@ $ZIP_FILE
+      if [ -f $ZIP_FILE ]
+      then 
+      echo "zip file is created"
+
+      while read -r filepath
+        do
+           echo "deleting files in zip file"
+            rm -rf $filepath
+        done <<< $FILES
+
+    esle "zip file is not created"
     exit 1
+  fi
+  
+  esle "files are not present"
+  exit 1
 fi
 
 
