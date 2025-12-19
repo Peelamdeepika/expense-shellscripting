@@ -24,25 +24,27 @@ if [ ! -d "$DESTI_DIR" ]
      exit 1
 fi
 
-FIND=$(find $SOURCE_DIR -name "*.log" -mmin +$DAYS)
+FILES=$(find $SOURCE_DIR -name "*.log" -mmin +$DAYS)
 
-if [ -n "$FIND" ]
+if [ -n "$FILES" ]
   then 
-  echo " we are able to find files $FIND"
+  echo " we are able to find files $FILES"
   ZIP_FILE="/home/ec2-user/arch_log/app_logs.zip"
-  find $SOURCE_DIR -name "*.log" -mmin +$DAYS | ZIP -@ "$ZIP_FILE"
+  echo "$FILES" | zip -@ "$ZIP_FILE"
 if [ -f $ZIP_FILE ]
  then
-   echo " successfully created the $ZIP_FILE" file
-  while -r read filepath
+   echo " successfully created the $ZIP_FILE file"
+  while read -r filepath
   do 
-  echo "Deleting the $ZIP_FILE"
-  rm -rf $ZIP_FILE
-  echo "Deleted the $ZIP_FILE"
+      echo "Deleting the $filepath"
+      rm -rf "$filepath"
+      echo "Deleted the $filepath"
   done <<< $FILES
+
  else
  echo "failed to create zipfile"
  exit 1
 fi
 else
 echo "we are not able to find files"
+fi
