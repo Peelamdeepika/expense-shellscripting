@@ -23,6 +23,13 @@ if [ ! -d $DEST_DIR ]
    exit 1
 fi
 
+FILES=$(find $SOURCE_DIR -name "*.log" -mmin +$DAYS)
 
+if [ -n $FILES ]
+  then
+    echo " files are present"
+    echo "$FILES"
+    exit 1
+fi
 
 
