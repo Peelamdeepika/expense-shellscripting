@@ -46,12 +46,3 @@ if [ -f $ZIP_FILE ]
 fi
 else
 echo "we are not able to find files"
-
-
-
-
-
-
-
-     
-
