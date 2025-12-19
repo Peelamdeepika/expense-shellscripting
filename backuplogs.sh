@@ -26,7 +26,7 @@ fi
 
 FIND=$(find $SOURCE_DIR -name "*.log" -mtime +$DAYS)
 
-if [ -n "$SOURCE_DIR" ]
+if [ -n "$FIND" ]
   then 
   echo " we are able to find files $FIND"
   exit 1
