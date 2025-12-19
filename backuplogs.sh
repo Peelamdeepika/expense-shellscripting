@@ -45,7 +45,7 @@ if [ -f $ZIP_FILE ]
  exit 1
 fi
 else
-echo "we are not able to find files'
+echo "we are not able to find files"
 
 
 
