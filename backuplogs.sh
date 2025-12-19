@@ -9,7 +9,7 @@ DAYS={3:-14}
 if [ $# -lt 2 ]
   then
   echo "source or destination dircetory is missing"
-  eit 1
+  exit 1
 fi 
 
  if [ ! -d "$SOURCE_DIR" ] 
