@@ -24,7 +24,7 @@ if [ ! -d "$DESTI_DIR" ]
      exit 1
 fi
 
-FIND=$(find $SOURCE_DIR -name "*.log" -mtime +$DAYS)
+FIND=$(find $SOURCE_DIR -name "*.log" -mmin +$DAYS)
 
 if [ -n "$FIND" ]
   then 
